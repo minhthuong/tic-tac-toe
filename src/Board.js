@@ -1,11 +1,7 @@
 /**
  * Created by nguyenminhthuong on 15/11/18.
  */
-
-const SEED = {
-  CROSS: 'X',
-  DOUGHT: 'O'
-};
+import { SEED } from './constants';
 
 export default class Board {
   constructor(n) {
@@ -53,68 +49,68 @@ export default class Board {
     if([SEED.CROSS, SEED.DOUGHT].includes(this.board[this.currRow][this.currCol])) {
       return false;
     } else {
-        this.board[this.currRow][this.currCol] = seed;
-        this.moveCount ++;
+      this.board[this.currRow][this.currCol] = seed;
+      this.moveCount ++;
     }
     return true;
   }
 
   hasWonCol(seed) {
-      return (this.currRow < this.n - 1  && this.currRow > 0
-      && this.board[this.currRow - 1][this.currCol] === seed
-      && this.board[this.currRow + 1][this.currCol] === seed
+    return (this.currRow < this.n - 1  && this.currRow > 0 // with 2 cells on sides
+    && this.board[this.currRow - 1][this.currCol] === seed
+    && this.board[this.currRow + 1][this.currCol] === seed
 
-      ||this.currRow < this.n - 2
-      && this.board[this.currRow + 1][this.currCol] === seed
-      && this.board[this.currRow + 2][this.currCol] === seed
+    ||this.currRow < this.n - 2
+    && this.board[this.currRow + 1][this.currCol] === seed // with 2 next cells down
+    && this.board[this.currRow + 2][this.currCol] === seed
 
-      ||this.currRow > 1
-      && this.board[this.currRow - 1][this.currCol] === seed
-      && this.board[this.currRow - 2][this.currCol] === seed);
+    ||this.currRow > 1
+    && this.board[this.currRow - 1][this.currCol] === seed // with 2 next cells up
+    && this.board[this.currRow - 2][this.currCol] === seed);
   }
   
   hasWonRow(seed){
-      return (this.currCol < this.n - 1 && this.currCol > 0
-      && this.board[this.currRow][this.currCol - 1] === seed
-      && this.board[this.currRow][this.currCol + 1] === seed
+    return (this.currCol < this.n - 1 && this.currCol > 0 // with 2 cells on sides
+    && this.board[this.currRow][this.currCol - 1] === seed
+    && this.board[this.currRow][this.currCol + 1] === seed
 
-      ||this.currCol < this.n - 2
-      && this.board[this.currRow][this.currCol + 1] === seed
-      && this.board[this.currRow][this.currCol + 2] === seed
+    ||this.currCol < this.n - 2
+    && this.board[this.currRow][this.currCol + 1] === seed // with 2 next cells on the right
+    && this.board[this.currRow][this.currCol + 2] === seed
 
-      ||this.currCol > 1
-      && this.board[this.currRow][this.currCol - 1] === seed
-      && this.board[this.currRow][this.currCol - 2] === seed);
+    ||this.currCol > 1
+    && this.board[this.currRow][this.currCol - 1] === seed // with 2 next cells on the left
+    && this.board[this.currRow][this.currCol - 2] === seed);
 
   }
 
   hasWonDiagonal(seed){
-      return (this.currRow < this.n - 1 && this.currRow > 0 && this.currCol < this.n - 1 && this.currCol > 0
-      && this.board[this.currRow + 1][this.currCol + 1] === seed
-      && this.board[this.currRow - 1][this.currCol - 1] === seed
-          
-      || this.currRow < this.n - 2 && this.currCol < this.n - 2
-      && this.board[this.currRow + 1][this.currCol + 1] === seed
-      && this.board[this.currRow + 2][this.currCol + 2] === seed
+    return (this.currRow < this.n - 1 && this.currRow > 0 && this.currCol < this.n - 1 && this.currCol > 0
+    && this.board[this.currRow + 1][this.currCol + 1] === seed // with 2 cells on sides
+    && this.board[this.currRow - 1][this.currCol - 1] === seed
 
-      || this.currRow > 1 && this.currCol > 1
-      && this.board[this.currRow - 1][this.currCol - 1] === seed
-      && this.board[this.currRow - 2][this.currCol - 2] === seed);
+    || this.currRow < this.n - 2 && this.currCol < this.n - 2
+    && this.board[this.currRow + 1][this.currCol + 1] === seed // with 2 next cells down
+    && this.board[this.currRow + 2][this.currCol + 2] === seed
+
+    || this.currRow > 1 && this.currCol > 1
+    && this.board[this.currRow - 1][this.currCol - 1] === seed // with 2 next cells up
+    && this.board[this.currRow - 2][this.currCol - 2] === seed);
 
   }
 
   hasWonAntiDiagonal(seed){
-      return (this.currRow < this.n - 1 && this.currRow > 0 && this.currCol < this.n - 1 && this.currCol > 0
-      && this.board[this.currRow - 1][this.currCol + 1] === seed
-      && this.board[this.currRow + 1][this.currCol - 1] === seed
+    return (this.currRow < this.n - 1 && this.currRow > 0 && this.currCol < this.n - 1 && this.currCol > 0
+    && this.board[this.currRow - 1][this.currCol + 1] === seed // with 2 cells on sides
+    && this.board[this.currRow + 1][this.currCol - 1] === seed
 
-      || this.currRow < this.n - 2 && this.currCol > 1
-      && this.board[this.currRow + 1][this.currCol - 1] === seed
-      && this.board[this.currRow + 2][this.currCol - 2] === seed
+    || this.currRow < this.n - 2 && this.currCol > 1
+    && this.board[this.currRow + 1][this.currCol - 1] === seed // with 2 cells down
+    && this.board[this.currRow + 2][this.currCol - 2] === seed
 
-      || this.currRow > 1 && this.currCol < this.n - 2
-      && this.board[this.currRow - 1][this.currCol + 1] === seed
-      && this.board[this.currRow - 2][this.currCol + 2] === seed);
+    || this.currRow > 1 && this.currCol < this.n - 2
+    && this.board[this.currRow - 1][this.currCol + 1] === seed // with 2 cells up
+    && this.board[this.currRow - 2][this.currCol + 2] === seed);
 
   }  
   
@@ -127,7 +123,7 @@ export default class Board {
   }
 
   getCurrSeed() {
-      return this.board[this.currRow][this.currCol];
+    return this.board[this.currRow][this.currCol];
   }
   
   isDraw() {

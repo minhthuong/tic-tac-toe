@@ -3,22 +3,13 @@
  */
 import readlineSync from 'readline-sync';
 import Board from './Board';
-
-const SEED = {
-  CROSS: 'X',
-  DOUGHT: 'O'
-};
-
-const GAME_STATE = {
-  PLAYING:'PLAYING',
-  END: 'END',
-};
+import { SEED, GAME_STATE } from './constants';
 
 class Player {
-    constructor(name, seed) {
-        this.name = name;
-        this.seed = seed;
-    }
+  constructor(name, seed) {
+    this.name = name;
+    this.seed = seed;
+  }
 }
 
 export default class Game {
@@ -31,8 +22,8 @@ export default class Game {
     let isValidSize = false;
     let size;
     while(!isValidSize) {
-        size = readlineSync.question('Enter N to play board NxN (N >=3):');
-        isValidSize = size >= 3;
+      size = readlineSync.question('Enter N to play board NxN (N >=3):');
+      isValidSize = size >= 3;
     }
     const board = new Board(size);
 
@@ -49,17 +40,20 @@ export default class Game {
     while(this.state === GAME_STATE.PLAYING) {
       let isValidMove = false;
       while(!isValidMove) {
-          const moveIndex = readlineSync.question(`${this.currPlayer.name}, choose a box to place an ${this.currPlayer.seed} onto: `);
-          isValidMove = board.checkAndUpdate(moveIndex, this.currPlayer.seed);
+        const moveIndex = readlineSync.question(`${this.currPlayer.name}, choose a box to place an ${this.currPlayer.seed} onto: `);
+        isValidMove = board.checkAndUpdate(moveIndex, this.currPlayer.seed);
       }
+
       board.display();
+
       if(board.hasWon()) {
         this.state = GAME_STATE.END;
         console.log(`Congratulations, ${this.currPlayer.name}. You have won!`);
       } else if(board.isDraw()) {
-            this.state = GAME_STATE.END;
-            console.log('Its a draw.');
-        }
+        this.state = GAME_STATE.END;
+        console.log('Its a draw.');
+      }
+
       this.currPlayer = this.currPlayer.seed === SEED.CROSS ? player2 : player1;
     }
   }
