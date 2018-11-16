@@ -29,12 +29,15 @@ export default class Board {
     const sizeLen = (this.n * this.n).toString().length;
     for(let i = 0; i < this.n; i++) {
       for(let j = 0; j < this.n; j++) {
-        process.stdout.write(this.board[i][j].padEnd(sizeLen) +' | ');
+        process.stdout.write(' '+ this.board[i][j].padEnd(sizeLen));
+        if(j < this.n - 1) {
+          process.stdout.write(' |');
+        }
       }
       process.stdout.write('\n');
       if(i < this.n - 1) {
           for(let col = 0; col < this.n; col++){
-            process.stdout.write(' - - ');
+            process.stdout.write('-----'.padEnd(sizeLen, '-'));
           }
       }
       process.stdout.write('\n');
